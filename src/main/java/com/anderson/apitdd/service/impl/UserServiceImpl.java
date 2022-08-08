@@ -7,11 +7,14 @@ import com.anderson.apitdd.exception.BadRequestGeneric;
 import com.anderson.apitdd.exception.NotFoundGeneric;
 import com.anderson.apitdd.repository.UserRepository;
 import com.anderson.apitdd.service.UserService;
+import com.anderson.apitdd.util.Cryptography;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -19,6 +22,14 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
     @Autowired
     private ModelMapper modelMapper;
+
+    @Override
+    public List<UserRespDto> findAllUser() {
+        return userRepository.findAll()
+                .stream()
+                .map(user -> modelMapper.map(user,UserRespDto.class))
+                .collect(Collectors.toList());
+    }
 
     @Override
     public UserRespDto findById(Long id) {
@@ -32,6 +43,7 @@ public class UserServiceImpl implements UserService {
         if(isUser.isPresent()){
            throw  new BadRequestGeneric("O e-mail fornecido já está vinculado a um usuario");
         }
+        userReqDto.setPassword(Cryptography.md5(userReqDto.getPassword()));
         User user=modelMapper.map(userReqDto,User.class);
         user=userRepository.save(user);
         return modelMapper.map(user,UserRespDto.class);

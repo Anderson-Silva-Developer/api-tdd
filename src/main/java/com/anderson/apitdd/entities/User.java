@@ -16,8 +16,7 @@ public class User {
     @Email
     @Column(unique = true)
     private String email;
-    @Column(nullable = false,length = 16)
-    @Min(8)
+    @Column(nullable = false)
     private String password;
 
     public User( ){

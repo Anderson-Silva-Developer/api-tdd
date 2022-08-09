@@ -9,4 +9,6 @@ public interface UserService {
     public List<UserRespDto> findAllUser();
     public UserRespDto findById(Long id);
     public UserRespDto createUser(UserReqDto userReqDto);
+    public void updateUser(Long id,UserReqDto userReqDto);
+    public void deleteUser(Long id,UserReqDto userReqDto);
 }

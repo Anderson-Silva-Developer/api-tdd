@@ -60,7 +60,14 @@ class UserServiceImplTest {
     }
 
     @Test
-    void createUser() {
+    void whenCreateUserTheReturnAnUserInstance() {
+        Mockito.when(userRepository.findByEmailIgnoreCase(Mockito.anyString())).thenReturn(Optional.empty());
+        Mockito.when(userService.createUser(userReqDto)).thenReturn(userRespDto);
+        UserRespDto userResp =userService.createUser(userReqDto);
+        Assertions.assertEquals(ID,userResp.getId());
+        Assertions.assertEquals(USER,userResp.getName());
+        Assertions.assertEquals(EMAIL,userResp.getEmail());
+        Assertions.assertEquals(userRespDto,userResp);
     }
 
     @Test

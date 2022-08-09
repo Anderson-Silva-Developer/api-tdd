@@ -73,7 +73,10 @@ class UserServiceImplTest {
     private void startUser(){
         user=new User(ID, USER, EMAIL, PASSWORD);
         userReqDto=new UserReqDto(USER,EMAIL,PASSWORD);
-        userRespDto=new UserRespDto(ID,USER,PASSWORD);
+        userRespDto=new UserRespDto();
+        userRespDto.setId(ID);
+        userRespDto.setName(USER);
+        userRespDto.setEmail(EMAIL);
         optionalUser=Optional.of(new User(ID,USER,EMAIL,PASSWORD));
     }
 }

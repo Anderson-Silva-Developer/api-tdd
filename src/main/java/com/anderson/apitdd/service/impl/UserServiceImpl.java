@@ -108,4 +108,13 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findByEmailIgnoreCase(email).orElse(null);
         return user;
     }
+    public UserRespDto loginUser(UserReqDto userReqDto) {
+        Optional<User> optionalUser=userRepository
+                .findByEmailIgnoreCaseAndPassword(userReqDto.getEmail(),Cryptography.md5(userReqDto.getPassword()));
+        if (optionalUser.isEmpty()) {
+            throw new NotFoundGeneric("Usuário não encontrado!");
+        }
+        return modelMapper.map(optionalUser,UserRespDto.class);
+
+    }
 }

@@ -26,6 +26,11 @@ public class UserController {
       return ResponseEntity.ok().body(userService.findById(id));
 
     }
+    @GetMapping("/login")
+    public ResponseEntity<UserRespDto> findByUserEmailAndPassword(@RequestBody @Valid UserReqDto userReqDto){
+        return ResponseEntity.ok().body(userService.loginUser(userReqDto));
+
+    }
     @PostMapping
     public ResponseEntity<UserRespDto> creteUser(@RequestBody @Valid UserReqDto userReqDto){
         return ResponseEntity.ok().body(userService.createUser(userReqDto));

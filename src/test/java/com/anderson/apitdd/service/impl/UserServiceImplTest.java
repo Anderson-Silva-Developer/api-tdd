@@ -3,6 +3,7 @@ package com.anderson.apitdd.service.impl;
 import com.anderson.apitdd.dto.UserReqDto;
 import com.anderson.apitdd.dto.UserRespDto;
 import com.anderson.apitdd.entities.User;
+import com.anderson.apitdd.exception.NotFoundGeneric;
 import com.anderson.apitdd.repository.UserRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -15,8 +16,6 @@ import org.modelmapper.ModelMapper;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.Optional;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class UserServiceImplTest {
@@ -48,6 +47,17 @@ class UserServiceImplTest {
 
     @Test
     void findAllUser() {
+    }
+    @Test
+    void whenLoginUserReturnAnUserIntance(){
+        Mockito.when(userRepository.findByEmailIgnoreCaseAndPassword(Mockito.anyString(),Mockito.anyString()))
+                .thenReturn(optionalUser);
+        Mockito.when(userService.loginUser(userReqDto)).thenReturn(userRespDto);
+        UserRespDto userResp =userService.loginUser(userReqDto);
+        Assertions.assertEquals(ID,userResp.getId());
+        Assertions.assertEquals(EMAIL,userResp.getEmail());
+        Assertions.assertEquals(userRespDto,userResp);
+
     }
 
     @Test

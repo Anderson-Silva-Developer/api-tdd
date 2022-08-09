@@ -11,4 +11,5 @@ public interface UserService {
     public UserRespDto createUser(UserReqDto userReqDto);
     public void updateUser(Long id,UserReqDto userReqDto);
     public void deleteUser(Long id,UserReqDto userReqDto);
+    public UserRespDto loginUser(UserReqDto userReqDto);
 }
